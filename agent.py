@@ -1,6 +1,4 @@
-import numpy as np
 import pandas as pd
-from decision_functions import *
 from pathlib import Path
 
 class Agent:
@@ -45,34 +43,10 @@ def game(player, hider, trials):
         player.update_history(player_move, feedback)
         hider.update_history(hider_move, hider_move != player_move)
         
-        game_data = pd.concat([game_data, pd.DataFrame({"hider": hider_move, "player": player_move, "feedback": feedback}, index=[t])])
+        game_data = pd.concat([game_data, pd.DataFrame({"hider": [hider_move], "player": [player_move], "feedback": [feedback], "trial": [t+1]})], ignore_index=True)
     
     return game_data
 
-
-
-if __name__ in "__main__":
-
-    path = Path(__file__).parent
-    outpath = path / "data"
-
-    if not outpath.exists():
-        outpath.mkdir(parents=True)
-
-
-    for bias in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]:
-        hider = Agent(perfect_memory, include_history=True)
-        player = Agent(random_decision, bias = 0.5)
-        data = game(player, hider, 120)
-
-        data.to_csv(outpath / f"bias_{bias}.csv")
-
-    for window_size in [1, 2, 5, 10, 20, 30, 40, 50, None]:
-        hider = Agent(perfect_memory, include_history=True, memory_window = window_size)
-        player = Agent(random_decision, bias = 0.7)
-        data = game(player, hider, 120)
-
-        data.to_csv(outpath / f"window_{window_size}.csv")
 
 
 
