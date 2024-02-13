@@ -7,14 +7,9 @@ Portfolio 1 for Advanced Cognitive Modeling (S2024) by study group 1 consisting 
 
 
 ## Usage
-To run the analysis, run the following commands in the terminal:
+To run the analysis, run the following command in the terminal:
 
-To generate the data:
-```
-python agent.py 
-```
 
-To generate the plots:
 ```
-python plot.py
+python run_simulations.py
 ```
